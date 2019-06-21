@@ -11,7 +11,7 @@ export default class App extends Component{
     Text1: '',
   };
 
-  signIn = async () => {
+  teste = async () => {
     if (this.state.Text1) {
       console.log(this.state.Text1)
       this.props.navigation.navigate('Page3')
