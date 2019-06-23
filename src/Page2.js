@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, AsyncStorage, TextInput, ScrollView, TouchableOpacity, Alert, Button} from 'react-native';
 
 export default class App extends Component{
 
@@ -8,11 +8,37 @@ export default class App extends Component{
   };
 
   state = {
-    Text1: '',
+    usuario: '',
+    result: '',
+    email: 'teste@teste.com',
   };
 
+  saveData () {
+    const usuario = {
+      'User': Date.now(),
+      'email': this.state.email,
+    };
+    AsyncStorage.setItem('usuario', JSON.stringify(usuario));
+    Alert.alert(JSON.stringify(usuario));
+  }
+
+  pegarData () {
+    AsyncStorage.getItem('usuario', (err, result) => {
+      console.log(result);
+    });
+  }
+
+  displayData = async () => {
+    try {
+      const usuario = await AsyncStorage.getItem('usuario');
+      this.setState({ usuario });
+    } catch (error) {
+      Alert.alert(error);
+    }
+  }
+
   teste = async () => {
-    if (this.state.Text1) {
+    if (this.state.usuario) {
       console.log(this.state.Text1)
       this.props.navigation.navigate('Page3')
     }
@@ -31,42 +57,14 @@ export default class App extends Component{
           value={this.state.Text1}
           onChangeText={Text1 => this.setState({ Text1 })}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Teste"
-          placeholderTextColor="#ddd"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Teste"
-          placeholderTextColor="#ddd"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Teste"
-          placeholderTextColor="#ddd"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Teste"
-          placeholderTextColor="#ddd"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Teste"
-          placeholderTextColor="#ddd"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Teste"
-          placeholderTextColor="#ddd"
-        />
-        <Text style={styles.input}>Ismael!</Text>
+        <Text style={styles.paragraph}>{this.state.usuario}</Text>
+        <Button onPress={() => this.saveData()} title="Save" />
+        <Button onPress={() => this.displayData()} title="Display" />
         <TouchableOpacity
           style={{ marginRight: 20, textAlign: 'center' }}
           onPress={this.teste}
         >
-        <Text>Entre aqui!</Text>
+          <Text>Entre aqui!</Text>
         </TouchableOpacity>
       </ScrollView>
     );

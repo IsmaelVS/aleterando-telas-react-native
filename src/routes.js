@@ -12,7 +12,8 @@ export default createAppContainer(
     },
     {
       defaultNavigationOptions: {
-        headerTintColor: '#000',
+        headerStyle: { backgroundColor: '#00BFFF' },
+        headerTitleStyle:{ color: '#000000'},
         headerBackTitle: null
       },
       mode: 'modal'
