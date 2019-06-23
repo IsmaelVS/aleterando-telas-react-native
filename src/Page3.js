@@ -70,6 +70,7 @@ export default class App extends Component{
           placeholderTextColor="#000000"
           value={this.state.cep}
           onChangeText={cep => this.setState({ cep })}
+          onBlur={this.preencher}
         />
         <TextInput
           style={styles.input}
